@@ -50,4 +50,7 @@ public class DataBaseManager extends SQLiteOpenHelper {
         String sicknessQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_SICKNESS +" ( " + ID + " INTEGER PRIMARY KEY, " + NAME + " TEXT, " + SHARHE_BIMARI + " TEXT, " + ALAYEM + ALAYEM + " TEXT, " + FAVORITE + " INTEGER );";
         sqLiteDatabase.execSQL(sicknessQuery);
     }
+//    In short, this method is used to perform database update operations when the version changes.
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {}
 }
