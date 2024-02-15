@@ -1,5 +1,6 @@
 package com.example.online_pharmcy;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -50,7 +51,17 @@ public class DataBaseManager extends SQLiteOpenHelper {
         String sicknessQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_SICKNESS +" ( " + ID + " INTEGER PRIMARY KEY, " + NAME + " TEXT, " + SHARHE_BIMARI + " TEXT, " + ALAYEM + ALAYEM + " TEXT, " + FAVORITE + " INTEGER );";
         sqLiteDatabase.execSQL(sicknessQuery);
     }
-//    In short, this method is used to perform database update operations when the version changes.
+//  In short, this method is used to perform database update operations when the version changes.
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {}
+//  The method of entering information about honey therapy into the database.
+    public long insertHoneyData(Items items){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ID, items.id_Items);
+        contentValues.put(NAME, items.name_Items);
+        contentValues.put(KHAVASEASAL, items.khavaseasal_Items);
+        contentValues.put(FAVORITE,0);
+        return sqLiteDatabase.insert(TABLE_NAME_HONEY, null, contentValues);
+    }
 }
