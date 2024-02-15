@@ -1,6 +1,9 @@
 package com.example.online_pharmcy;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import androidx.annotation.Nullable;
 
 public class DataBaseManager extends SQLiteOpenHelper {
 
@@ -23,5 +26,8 @@ public class DataBaseManager extends SQLiteOpenHelper {
     private static final String ALAYEM ="alayem";
     private static final String FAVORITE ="favorite";
     private static final String TEXT ="text";
-
+//  Class constructor method.
+    public DataBaseManager(@Nullable Context context) {
+        super(context, DATABASE_NAME, null, VERSION);
+    }
 }
