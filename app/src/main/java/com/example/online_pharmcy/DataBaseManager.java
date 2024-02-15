@@ -64,4 +64,12 @@ public class DataBaseManager extends SQLiteOpenHelper {
         contentValues.put(FAVORITE,0);
         return sqLiteDatabase.insert(TABLE_NAME_HONEY, null, contentValues);
     }
+//  The method of entering information about the symptoms of diseases into the database.
+    public long insertAlayemData(Items items){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ID, items.id_Items);
+        contentValues.put(NAME, items.name_Items);
+        return sqLiteDatabase.insert(TABLE_NAME_ALAYEM,null,contentValues);
+    }
 }
