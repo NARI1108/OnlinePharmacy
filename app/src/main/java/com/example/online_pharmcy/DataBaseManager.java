@@ -9,30 +9,32 @@ import androidx.annotation.Nullable;
 
 public class DataBaseManager extends SQLiteOpenHelper {
 
-//  private static final String DATABASE_NAME ="DrugsStore.db";
-    private static final String DATABASE_NAME ="DrugsStore.db";
+    //  private static final String DATABASE_NAME ="DrugsStore.db";
+    private static final String DATABASE_NAME = "DrugsStore.db";
     private static final int VERSION = 1;
     public static final String TABLE_NAME_HONEY = "honey_tbl";
-    public static final String TABLE_NAME_ALAYEM ="alayem_tbl";
-    public static final String TABLE_NAME_AVAREZ ="avarez_tbl";
-    public static final String TABLE_NAME_DURGS ="durgs_tbl";
-    public static final String TABLE_NAME_SICKNESS ="sickness_tbl";
-    private static final String  ID ="id";
-    private static final String NAME ="name";
-    private static final String KHAVASEASAL ="khavaseasal";
-    private static final String GOROHE_DARO ="gorohedaro";
+    public static final String TABLE_NAME_ALAYEM = "alayem_tbl";
+    public static final String TABLE_NAME_AVAREZ = "avarez_tbl";
+    public static final String TABLE_NAME_DURGS = "durgs_tbl";
+    public static final String TABLE_NAME_SICKNESS = "sickness_tbl";
+    private static final String ID = "id";
+    private static final String NAME = "name";
+    private static final String KHAVASEASAL = "khavaseasal";
+    private static final String GOROHE_DARO = "gorohedaro";
     private static final String MOREDEMASRAF = "moredemasraf";
-    private static final String MIZANEMASRAF ="mizanemasraf";
-    private static final String TOZIHAT ="tozihat";
-    private static final String SHARHE_BIMARI ="sharhe_bimari";
-    private static final String ALAYEM ="alayem";
-    private static final String FAVORITE ="favorite";
-    private static final String TEXT ="text";
-//  Class constructor method.
+    private static final String MIZANEMASRAF = "mizanemasraf";
+    private static final String TOZIHAT = "tozihat";
+    private static final String SHARHE_BIMARI = "sharhe_bimari";
+    private static final String ALAYEM = "alayem";
+    private static final String FAVORITE = "favorite";
+    private static final String TEXT = "text";
+
+    //  Class constructor method.
     public DataBaseManager(@Nullable Context context) {
         super(context, DATABASE_NAME, null, VERSION);
     }
-//  This piece of code is used in Android to create the required tables in the SQLite database.
+
+    //  This piece of code is used in Android to create the required tables in the SQLite database.
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 //     Query to create the required tables in the database.
@@ -48,38 +50,56 @@ public class DataBaseManager extends SQLiteOpenHelper {
         String durgsQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_DURGS + " ( " + ID + " INTEGER PRIMARY KEY, " + NAME + " TEXT, " + GOROHE_DARO + " TEXT, " + MOREDEMASRAF + " TEXT, " + MIZANEMASRAF + " TEXT, " + TOZIHAT + " TEXT, " + FAVORITE + " INTEGER );";
         sqLiteDatabase.execSQL(durgsQuery);
 
-        String sicknessQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_SICKNESS +" ( " + ID + " INTEGER PRIMARY KEY, " + NAME + " TEXT, " + SHARHE_BIMARI + " TEXT, " + ALAYEM + ALAYEM + " TEXT, " + FAVORITE + " INTEGER );";
+        String sicknessQuery = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_SICKNESS + " ( " + ID + " INTEGER PRIMARY KEY, " + NAME + " TEXT, " + SHARHE_BIMARI + " TEXT, " + ALAYEM + ALAYEM + " TEXT, " + FAVORITE + " INTEGER );";
         sqLiteDatabase.execSQL(sicknessQuery);
     }
-//  In short, this method is used to perform database update operations when the version changes.
+
+    //  In short, this method is used to perform database update operations when the version changes.
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {}
-//  The method of entering information about honey therapy into the database.
-    public long insertHoneyData(Items items){
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+    }
+
+    //  The method of entering information about honey therapy into the database.
+    public long insertHoneyData(Items items) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(ID, items.id_Items);
         contentValues.put(NAME, items.name_Items);
         contentValues.put(KHAVASEASAL, items.khavaseasal_Items);
-        contentValues.put(FAVORITE,0);
+        contentValues.put(FAVORITE, 0);
         return sqLiteDatabase.insert(TABLE_NAME_HONEY, null, contentValues);
     }
-//  The method of entering information about the symptoms of diseases into the database.
-    public long insertAlayemData(Items items){
+
+    //  The method of entering information about the symptoms of diseases into the database.
+    public long insertAlayemData(Items items) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(ID, items.id_Items);
         contentValues.put(NAME, items.name_Items);
-        return sqLiteDatabase.insert(TABLE_NAME_ALAYEM,null,contentValues);
+        return sqLiteDatabase.insert(TABLE_NAME_ALAYEM, null, contentValues);
     }
-//  The method of entering information about the complications of diseases into the database.
-    public long insertAvarezData(Items items){
+
+    //  The method of entering information about the complications of diseases into the database.
+    public long insertAvarezData(Items items) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ID,items.id_Items);
+        contentValues.put(ID, items.id_Items);
         contentValues.put(NAME, items.name_Items);
         contentValues.put(TEXT, items.text_Items);
-        contentValues.put(FAVORITE,0);
-        return sqLiteDatabase.insert(TABLE_NAME_AVAREZ,null,contentValues);
+        contentValues.put(FAVORITE, 0);
+        return sqLiteDatabase.insert(TABLE_NAME_AVAREZ, null, contentValues);
+    }
+//    The method of entering information about drugs in the database.
+    public long insertDurgsData(Items items){
+        SQLiteDatabase sqliteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ID, items.id_Items);
+        contentValues.put(NAME, items.name_Items);
+        contentValues.put(GOROHE_DARO, items.gorohedaro_Items);
+        contentValues.put(MOREDEMASRAF, items.moredemasraf_Items);
+        contentValues.put(MIZANEMASRAF, items.mizaneMasraf_Items);
+        contentValues.put(TOZIHAT, items.tozihat_Items);
+        contentValues.put(FAVORITE, 0);
+        return sqliteDatabase.insert(TABLE_NAME_DURGS,null,contentValues);
     }
 }
