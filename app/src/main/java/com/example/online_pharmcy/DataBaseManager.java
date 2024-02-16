@@ -2,6 +2,7 @@ package com.example.online_pharmcy;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -112,5 +113,12 @@ public class DataBaseManager extends SQLiteOpenHelper {
         contentValues.put(ALAYEM, items.alayem_Items);
         contentValues.put(FAVORITE,0);
         return sqliteDatabase.insert(TABLE_NAME_SICKNESS,null,contentValues);
+    }
+//    The method of counting the number of data (rows) stored in the desired table in the database.
+    public int count(String table_name){
+        String query = "SELECT * FROM " + table_name + "WHERE " + FAVORITE + "=1";
+        SQLiteDatabase sqliteDatabase =this.getReadableDatabase();
+        Cursor cursor = sqliteDatabase.rawQuery(query,null);
+        return cursor.getCount();
     }
 }
