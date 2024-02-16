@@ -121,4 +121,11 @@ public class DataBaseManager extends SQLiteOpenHelper {
         Cursor cursor = sqliteDatabase.rawQuery(query,null);
         return cursor.getCount();
     }
+//    The method of counting the number of rows that have been added to the favorites list.
+    public int countFavorite(String table_name){
+        String query = "SELECT * FROM " + table_name + "WHERE " + FAVORITE + "=1";
+        SQLiteDatabase sqliteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqliteDatabase.rawQuery(query,null);
+        return cursor.getCount();
+    }
 }
