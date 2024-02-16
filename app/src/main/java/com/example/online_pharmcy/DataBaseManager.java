@@ -147,4 +147,20 @@ public class DataBaseManager extends SQLiteOpenHelper {
         }
         return items;
     }
+//    The method of displaying the information of a disease based on the name of the disease.
+    @SuppressLint("Range")
+    public Items showSickness(String name){
+        String showQuery = "SELECT * FROM " + TABLE_NAME_SICKNESS + " WHERE " + "='" + name + "'";
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery(showQuery,null);
+        Items items = new Items();
+        if (cursor.moveToFirst()){
+            items.id_Items = cursor.getString(0);
+            items.name_Items = cursor.getString(cursor.getColumnIndex(NAME));
+            items.sharhebinari_Items = cursor.getString(cursor.getColumnIndex(SHARHE_BIMARI));
+            items.alayem_Items = cursor.getString(cursor.getColumnIndex(ALAYEM));
+            items.favorite = cursor.getInt(cursor.getColumnIndex(FAVORITE));
+        }
+        return items;
+    }
 }
