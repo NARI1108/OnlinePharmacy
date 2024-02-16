@@ -1,5 +1,6 @@
 package com.example.online_pharmcy;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -127,5 +128,23 @@ public class DataBaseManager extends SQLiteOpenHelper {
         SQLiteDatabase sqliteDatabase = this.getReadableDatabase();
         Cursor cursor = sqliteDatabase.rawQuery(query,null);
         return cursor.getCount();
+    }
+//    The method of displaying the information of a drug based on the name of the drug.
+    @SuppressLint("Range")
+    public Items showDrugs(String name){
+        String showQuery = "SELECT * FROM " + TABLE_NAME_DURGS + " WHERE " + NAME + "='" + name + "'";
+        SQLiteDatabase sqliteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqliteDatabase.rawQuery(showQuery,null);
+        Items items = new Items();
+        if (cursor.moveToFirst()){
+            items.id_Items = cursor.getString(0);
+            items.name_Items = cursor.getString(cursor.getColumnIndex(NAME));
+            items.gorohedaro_Items = cursor.getString(cursor.getColumnIndex(GOROHE_DARO));
+            items.moredemasraf_Items = cursor.getString(cursor.getColumnIndex(MOREDEMASRAF));
+            items.mizaneMasraf_Items = cursor.getString(cursor.getColumnIndex(MIZANEMASRAF));
+            items.tozihat_Items = cursor.getString(cursor.getColumnIndex(TOZIHAT));
+            items.favorite = cursor.getInt(cursor.getColumnIndex(FAVORITE));
+        }
+        return items;
     }
 }
