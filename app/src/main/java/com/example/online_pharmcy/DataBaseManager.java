@@ -102,4 +102,15 @@ public class DataBaseManager extends SQLiteOpenHelper {
         contentValues.put(FAVORITE, 0);
         return sqliteDatabase.insert(TABLE_NAME_DURGS,null,contentValues);
     }
+//  The method of entering information about sickness in the database.
+    public long insertSicknessData(Items items){
+        SQLiteDatabase sqliteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ID, items.id_Items);
+        contentValues.put(NAME, items.name_Items);
+        contentValues.put(SHARHE_BIMARI, items.sharhebinari_Items);
+        contentValues.put(ALAYEM, items.alayem_Items);
+        contentValues.put(FAVORITE,0);
+        return sqliteDatabase.insert(TABLE_NAME_SICKNESS,null,contentValues);
+    }
 }
