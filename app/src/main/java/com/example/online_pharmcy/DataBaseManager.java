@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class DataBaseManager extends SQLiteOpenHelper {
 
     //  private static final String DATABASE_NAME ="DrugsStore.db";
@@ -162,5 +164,19 @@ public class DataBaseManager extends SQLiteOpenHelper {
             items.favorite = cursor.getInt(cursor.getColumnIndex(FAVORITE));
         }
         return items;
+    }
+//    The method of searching in the list of diseases based on the symptoms of the disease.
+    @SuppressLint("Range")
+    public ArrayList<String> searchSickness(String alayem){
+        String showQuery = "SELECT * FROM " + TABLE_NAME_SICKNESS + " WHERE " + ALAYEM + " LIKE '%" + alayem + "%'";
+        SQLiteDatabase sqliteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqliteDatabase.rawQuery(showQuery,null);
+        ArrayList<String> name_list = new ArrayList<>();
+        if (cursor.moveToFirst()){
+            do {
+                name_list.add(cursor.getString(cursor.getColumnIndex(NAME)));
+            }while(cursor.moveToNext());
+        }
+        return name_list;
     }
 }
