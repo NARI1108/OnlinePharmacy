@@ -179,4 +179,19 @@ public class DataBaseManager extends SQLiteOpenHelper {
         }
         return name_list;
     }
+//    The method of displaying honey therapy information based on the title.
+    @SuppressLint("Range")
+    public Items showHoney(String name){
+        String showQuery = "SELECT * FROM " + TABLE_NAME_HONEY + " WHERE " + NAME + "='" + name + "'";
+        SQLiteDatabase  sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery(showQuery,null);
+        Items items = new Items();
+        if (cursor.moveToFirst()){
+            items.id_Items = cursor.getString(0);
+            items.name_Items = cursor.getString(cursor.getColumnIndex(NAME));
+            items.khavaseasal_Items = cursor.getString(cursor.getColumnIndex(KHAVASEASAL));
+            items.favorite = cursor.getInt(cursor.getColumnIndex(FAVORITE));
+        }
+        return items;
+    }
 }
