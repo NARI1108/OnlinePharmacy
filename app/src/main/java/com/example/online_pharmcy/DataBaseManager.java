@@ -223,4 +223,18 @@ public class DataBaseManager extends SQLiteOpenHelper {
         }
         return names_list;
     }
+//    Favorites list display method.
+    @SuppressLint("Range")
+    public ArrayList<String> showFavorite(String table_name){
+        String showQuery = "SELECT * FROM " + table_name + " WHERE " + FAVORITE + "=1";
+        SQLiteDatabase  sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery(showQuery,null);
+        ArrayList<String> name_list = new ArrayList<>();
+        if (cursor.moveToFirst()){
+            do{
+                name_list.add(cursor.getString(cursor.getColumnIndex(NAME)));
+            }while (cursor.moveToNext());
+        }
+        return name_list;
+    }
 }
