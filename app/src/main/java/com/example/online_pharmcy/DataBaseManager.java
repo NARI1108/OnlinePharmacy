@@ -237,4 +237,16 @@ public class DataBaseManager extends SQLiteOpenHelper {
         }
         return name_list;
     }
+//    The method of editing the row related to interests.
+    public  boolean updateFavorite(int id, int favorite, String table_name){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(FAVORITE,favorite);
+        int res = sqLiteDatabase.update(table_name,contentValues,ID+" = "+id,null);
+        if (res == 0){
+            return false;
+        }else
+            return true;
+
+    }
 }
