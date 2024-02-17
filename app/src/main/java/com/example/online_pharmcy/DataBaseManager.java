@@ -209,4 +209,18 @@ public class DataBaseManager extends SQLiteOpenHelper {
         }
         return items;
     }
+//    The method to display the table name column based on the table name.
+    public ArrayList<String> showNames(String table_name){
+        String showQuery = "SELECT * FROM " + table_name + "";
+        SQLiteDatabase  sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery(showQuery,null);
+        ArrayList<String> names_list = new ArrayList<>();
+        if(cursor.moveToFirst()){
+            do{
+                String name = cursor.getString(1);
+                names_list.add(name);
+            }while(cursor.moveToNext());
+        }
+        return names_list;
+    }
 }
