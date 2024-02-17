@@ -194,4 +194,19 @@ public class DataBaseManager extends SQLiteOpenHelper {
         }
         return items;
     }
+//   The method of displaying information on the complications of diseases.
+    @SuppressLint("Range")
+    public Items showAvarez(String name){
+        String showQuery = "SELECT * FROM " + TABLE_NAME_AVAREZ + " WHERE " + NAME + "='" +name + "'";
+        SQLiteDatabase sqliteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqliteDatabase.rawQuery(showQuery,null);
+        Items items = new Items();
+        if (cursor.moveToFirst()){
+            items.id_Items = cursor.getString(0);
+            items.name_Items = cursor.getString(cursor.getColumnIndex(NAME));
+            items.text_Items = cursor.getString(cursor.getColumnIndex(TEXT));
+            items.favorite = cursor.getInt(cursor.getColumnIndex(FAVORITE));
+        }
+        return items;
+    }
 }
