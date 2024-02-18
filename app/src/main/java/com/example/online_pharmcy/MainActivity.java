@@ -23,6 +23,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         animation();
         setVisibility();
         actionBarDrawerToggle();
+//       (Drop down menu) Set the click event on navigation view items
+        navi_view.setNavigationItemSelectedListener(MainActivity.this);
+//       Set the desired toolbar as an action bar
+        setSupportActionBar(toolbar);
+//       The value of the object related to the explosion animation.
+        exploionField = ExploionField.attach2Window(MainActivity.this);
+        dataBaseManager = new DataBaseManager(MainActivity.this);
     }
 //    This method actually connects views and layers from an XML layer to this layer.
     public void findViews(){
