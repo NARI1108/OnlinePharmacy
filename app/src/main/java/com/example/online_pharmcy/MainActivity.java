@@ -1,6 +1,7 @@
 package com.example.online_pharmcy;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import android.content.Intent;
@@ -21,6 +22,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         findViews();
         animation();
         setVisibility();
+        actionBarDrawerToggle();
     }
 //    This method actually connects views and layers from an XML layer to this layer.
     public void findViews(){
@@ -94,5 +96,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         rlt_avarez.setAnimation(animation2);
         rlt_bmi.setAnimation(animation1);
         rlt_tashkhis.setAnimation(animation2);
+    }
+//    In short, using this method, an ActionBarDrawerToggle is created and added to the DrawerLayout to handle drawer opening and closing interactions in the ActionBar.
+    public void actionBarDrawerToggle(){
+       ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this,drawer_layout, toolbar,R.string.open,R.string.close);
+       drawer_layout.addDrawerListener(actionBarDrawerToggle);
+       actionBarDrawerToggle.syncState();
     }
 }
