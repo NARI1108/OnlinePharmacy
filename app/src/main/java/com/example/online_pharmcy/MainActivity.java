@@ -2,12 +2,12 @@ package com.example.online_pharmcy;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -18,6 +18,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
+        animation();
     }
 //    This method actually connects views and layers from an XML layer to this layer.
     public void findViews(){
@@ -41,9 +42,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //        The ID related to the NavigationView.
         navi_view = findViewById(R.id.navi_view);
     }
-//  In short, this method is used to perform operations related to
-//  navigation menu items, such as starting an Activity, displaying
-//  messages, and closing the navigation menu.
+//  In short, this method is used to perform operations related to navigation menu items, such as starting an Activity, displaying messages, and closing the navigation menu.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int Ids = item.getItemId();
@@ -72,5 +71,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
         drawer_layout.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void animation(){
+        Animation animation1 = AnimationUtils.loadAnimation(MainActivity.this,R.anim.anim_trans1);
+        Animation animation2 = AnimationUtils.loadAnimation(MainActivity.this,R.anim.anim_trans2);
+
+        rlt_drugs.setAnimation(animation1);
+        rlt_sickness.setAnimation(animation2);
+        rlt_honey.setAnimation(animation1);
+        rlt_avarez.setAnimation(animation2);
+        rlt_bmi.setAnimation(animation1);
+        rlt_tashkhis.setAnimation(animation2);
     }
 }
