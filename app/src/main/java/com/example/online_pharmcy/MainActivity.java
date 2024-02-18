@@ -6,6 +6,7 @@ import androidx.core.view.GravityCompat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -19,6 +20,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setContentView(R.layout.activity_main);
         findViews();
         animation();
+        setVisibility();
     }
 //    This method actually connects views and layers from an XML layer to this layer.
     public void findViews(){
@@ -42,6 +44,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //        The ID related to the NavigationView.
         navi_view = findViewById(R.id.navi_view);
     }
+//  In other words, using this method, you can make components disappear or become visible again, depending on what you need at runtime.
+    public void setVisibility(){
+        txt_drugs_tedad.setVisibility(View.GONE);
+        txt_avarez_tedad.setVisibility(View.GONE);
+        txt_honey_tedad.setVisibility(View.GONE);
+        txt_sickness_tedad.setVisibility(View.GONE);
+        txt_tashkhis_tedad.setVisibility(View.GONE);
+    }
 //  In short, this method is used to perform operations related to navigation menu items, such as starting an Activity, displaying messages, and closing the navigation menu.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -55,13 +65,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.About:
                 new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("درباره مـــا")
+                        .setTitle(R.string.about_us)
                         .setMessage(R.string.About_us)
                         .show();
                 break;
             case R.id.resource:
                 new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("منــابــع")
+                        .setTitle(R.string.resources)
                         .setMessage(R.string.Resource)
                         .show();
                 break;
@@ -72,7 +82,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawer_layout.closeDrawer(GravityCompat.START);
         return true;
     }
+//  The corresponding components move and change shape using the loaded animations.
     public void animation(){
+//       Setting the button display animation.
         Animation animation1 = AnimationUtils.loadAnimation(MainActivity.this,R.anim.anim_trans1);
         Animation animation2 = AnimationUtils.loadAnimation(MainActivity.this,R.anim.anim_trans2);
 
