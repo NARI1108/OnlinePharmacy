@@ -110,4 +110,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
        drawer_layout.addDrawerListener(actionBarDrawerToggle);
        actionBarDrawerToggle.syncState();
     }
+    @Override
+    protected void onResume() {
+//      We made a condition that if the program was not executed first, the number of data would be taken from the database and server to check whether there is new data or not.
+        if(!first_run){
+            tedad_alayem_database = dataBaseManager.count(DataBaseManager.TABLE_NAME_ALAYEM);
+            tedad_honey_database = dataBaseManager.count(DataBaseManager.TABLE_NAME_HONEY);
+            tedad_avarez_database = dataBaseManager.count(DataBaseManager.TABLE_NAME_AVAREZ);
+            tedad_drugs_database = dataBaseManager.count(DataBaseManager.TABLE_NAME_DURGS);
+            tedad_sickness_database = dataBaseManager.count(DataBaseManager.TABLE_NAME_SICKNESS);
+            new GetTedadServer(this).execute();
+        }
+        super.onResume();
+    }
 }
