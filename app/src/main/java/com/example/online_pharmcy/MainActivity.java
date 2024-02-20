@@ -4,14 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -110,6 +116,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
        drawer_layout.addDrawerListener(actionBarDrawerToggle);
        actionBarDrawerToggle.syncState();
     }
+//    In short, in this method, we check whether the application has already been executed or not, then we get the data count from the database and the server, and finally, by calling an Async operation, we get the new data count from the server.
     @Override
     protected void onResume() {
 //      We made a condition that if the program was not executed first, the number of data would be taken from the database and server to check whether there is new data or not.
@@ -122,5 +129,62 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             new GetTedadServer(this).execute();
         }
         super.onResume();
+    }
+//    The class related to getting honey treatment information from the server.
+    private class GetHoneyData extends AsyncTask<void, void,String>{
+        Context context;
+        public GetHoneyData(Context context){
+            this.context = context;
+        }
+        @Override
+        protected void onPreExecute(){
+            showMessage(context,getString(R.string.loading));
+            super.onPreExecute();
+        }
+//        این متد که عملیات پس زمینه‌ای را انجام می‌دهد.
+        @Override
+        protected String doInBackground(void... voids) {
+            return JsonClass.getJson(LIKE_GET_HONEY);
+        }
+//      This method is used in connection with the end of a background operation in Android.
+        @Override
+        protected void onPostExecute(String data){
+            if (data.isEmpty()){
+                try {
+                   JSONArray jsonArray = new JSONArray(data);
+                   long res = 0;
+                   for (int i=0 ; i<jsonArray.length();i++){
+                       JSONObject jsonObject = jsonArray.getJSONObject(i);
+                       String id = jsonObject.getString("id");
+                       String name =jsonObject.getString("name");
+                       String khavaseasal = jsonObject.getString("khavaseasal");
+
+                       Items items = new Items();
+                       items.id_Items = id;
+                       items.name_Items = name;
+                       items.khavaseAsal_Items = khavaseasal;
+                       res = dataBaseManager.insertHoneyData(items);
+                   }
+                   progressDialog.dismiss();
+                   if(res == -1){
+                       Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show();
+                   }else{
+                       Toast.makeText(context, getString(R.string.seccessfully), Toast.LENGTH_SHORT).show();
+                       if(first_run)
+                       {new GetAlayemData().execute();}
+                       else{
+                           tedad_honey_database = dataBaseManager.count(dataBaseManager.TABLE_NAME_HONEY);
+                           hasNewData();}
+                   }
+                 } catch (JSONException e) {
+                   e.printStackTrace();
+                   progressDialog.dismiss();
+                }
+            }else{
+                Toast.makeText(MainActivity.this, getString(R.string.not_information), Toast.LENGTH_SHORT).show();
+                progressDialog().dismiss();
+            }
+            super.onPostExecute(data);
+        }
     }
 }
