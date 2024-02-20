@@ -1,10 +1,11 @@
 
 
 [<img alt="github" src="https://img.shields.io/badge/github-NARI1108/onlineparmacy-8da0cb?logo=github" height="20">](https://github.com/NARI1108/Pharmacy-Online)
-[![Apache](https://github.com/NARI1108/OnlinePharmacy/blob/master/LICENSE)
-[![Password](https://img.shields.io/badge/Vidoe-onlineparmacy-red.svg)]()
-![GitHub language count](https://img.shields.io/github/languages/count/NARI1108/Pharmacy-Online?color=pink)
-![GitHub watchers](https://img.shields.io/github/watchers/NARI1108/Pharmacy-Online?labelColor=gray&color=yellow)
+[![Apache](https://img.shields.io/badge/license-Apache-red.svg)](https://github.com/NARI1108/OnlinePharmacy/blob/master/LICENSE)
+![GitHub language count](https://img.shields.io/github/languages/count/NARI1108/OnlinePharmacy)
+![GitHub watchers](https://img.shields.io/github/watchers/NARI1108/OnlinePharmacy?style=flat&color=yellow)
+
+
 
 
 ## <code><strong>About App</strong></code> ##
