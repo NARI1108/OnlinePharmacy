@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -131,7 +132,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onResume();
     }
 //    The class related to getting honey treatment information from the server.
-    private class GetHoneyData extends AsyncTask<void, void,String>{
+    private class GetHoneyData extends AsyncTask<Void, Void,String>{
         Context context;
         public GetHoneyData(Context context){
             this.context = context;
@@ -141,9 +142,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             showMessage(context,getString(R.string.loading));
             super.onPreExecute();
         }
-//        این متد که عملیات پس زمینه‌ای را انجام می‌دهد.
+//     This method performs background operations.
         @Override
-        protected String doInBackground(void... voids) {
+        protected String doInBackground(Void... voids) {
             return JsonClass.getJson(LIKE_GET_HONEY);
         }
 //      This method is used in connection with the end of a background operation in Android.
@@ -187,4 +188,53 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             super.onPostExecute(data);
         }
     }
-}
+//  The class related to getting information about the symptoms of diseases from the server
+    private class GetAlayemData extends AsyncTask<Void,Void,String> {
+
+        @Override
+        protected void onPreExecute() {
+            // Toast.makeText(MainActivity.this, "در حال دریافت اطلاعات...", Toast.LENGTH_SHORT).show();
+            showMessage(MainActivity.this,getString(R.string.loading));
+            super.onPreExecute();
+        }
+        @Override
+        protected String doInBackground(Void... voids) {
+            return JsonClass.getJson(LIKE_GET_ALAYEM);
+        }
+
+        @Override
+        protected void onPostExecute(String data) {
+
+            if (data.isEmpty()){
+                try {
+                    JSONArray jsonArray = new JSONArray(data);
+                    long res = 0;
+                    for (int i=0; i<jsonArray.length();i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String id = jsonObject.getString("id");
+                        String name = jsonObject.getString("name");
+
+                        Items items = new Items();
+                        items.id_Items = id;
+                        items.name_Items = name;
+                        res = dataBaseManager.insertAlayemData(items);
+                    }
+                    progressDialog.dismiss();
+                    if (res == -1){
+                        Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(getApplicationContext(),getString(R.string.seccessfully), Toast.LENGTH_SHORT).show();
+                        new GetAvarezData().execute();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    progressDialog.dismiss();
+                }
+            }else {
+                Toast.makeText(MainActivity.this,getString(R.string.not_information), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+            super.onPostExecute(data);
+        }
+    }
+    }
