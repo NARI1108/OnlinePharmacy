@@ -237,4 +237,56 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             super.onPostExecute(data);
         }
     }
+//   The class related to getting information about the complications of diseases from the server.
+private class GetAvarezData extends AsyncTask<Void,Void,String> {
+    @Override
+    protected void onPreExecute() {
+        showMessage(MainActivity.this,getString(R.string.loading));
+        super.onPreExecute();
     }
+    @Override
+    protected String doInBackground(Void... voids) {
+        return JsonClass.getJson(LIKE_GET_AVAREZ);
+    }
+    @Override
+    protected void onPostExecute(String data) {
+        if (data !=null){
+            try {
+                JSONArray jsonArray = new JSONArray(data);
+                long res = 0;
+                for (int i=0; i<jsonArray.length();i++){
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String id = jsonObject.getString("id");
+                    String name = jsonObject.getString("name");
+                    String text = jsonObject.getString("text");
+
+                    Items items = new Items();
+                    items.id_Items = id;
+                    items.name_Items = name;
+                    items.text_Items = text;
+                    res = dataBaseManager.insertAvarezData(items);
+                }
+                progressDialog.dismiss();
+                if (res == -1){
+                    Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(),getString(R.string.seccessfully), Toast.LENGTH_SHORT).show();
+                    if (first_run){
+                        new GetDrugsData().execute();}
+                    else {
+                        tedad_avarez_database = dataBaseManager.count(DataBaseManager.TABLE_NAME_AVAREZ);
+                        hasNewData();
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                progressDialog.dismiss();
+            }
+        }else {
+            Toast.makeText(MainActivity.this,getString(R.string.not_information), Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+        }
+        super.onPostExecute(data);
+      }
+    }
+}
