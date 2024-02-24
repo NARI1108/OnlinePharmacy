@@ -344,4 +344,62 @@ private class GetAvarezData extends AsyncTask<Void,Void,String> {
             super.onPostExecute(data);
         }
     }
+//    The class related to getting disease information from the server.
+    private class GetSicknessData extends AsyncTask<Void,Void,String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            showMessage(MainActivity.this,getString(R.string.loading));
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            return JsonClass.getJson(LIKE_GET_SICKNESS);
+        }
+
+        @Override
+        protected void onPostExecute(String data) {
+
+            if (data !=null){
+
+                try {
+
+                    JSONArray jsonArray = new JSONArray(data);
+                    long res = 0;
+                    for (int i=0; i<jsonArray.length();i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String id = jsonObject.getString("id");
+                        String name = jsonObject.getString("name");
+                        String sharhebimari = jsonObject.getString("sharhebimari");
+                        String alayem = jsonObject.getString("alayem");
+
+                        Items items = new Items();
+                        items.id_Items = id;
+                        items.name_Items = name;
+                        items.sharhebimari_Items = sharhebimari;
+                        items.alyem_Items = alayem;
+                        res = dataBaseManager.insertSicknessData(items);
+                    }
+                    progressDialog.dismiss();
+                    if (res == -1){
+                        Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(getApplicationContext(),getString(R.string.seccessfully), Toast.LENGTH_SHORT).show();
+                        editor.putBoolean(FIRST_RUN,false).apply();
+                        first_run = false;
+                        tedad_sickness_database = dataBaseManager.count(DataBaseManager.TABLE_NAME_SICKNESS);hasNewData();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    progressDialog.dismiss();
+                }
+            }else {
+                Toast.makeText(MainActivity.this,getString(R.string.not_information), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+            super.onPostExecute(data);
+        }
+    }
 }
