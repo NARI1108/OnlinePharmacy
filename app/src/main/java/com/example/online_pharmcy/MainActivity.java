@@ -348,56 +348,103 @@ private class GetAvarezData extends AsyncTask<Void,Void,String> {
     private class GetSicknessData extends AsyncTask<Void,Void,String> {
 
 
+    @Override
+    protected void onPreExecute() {
+        showMessage(MainActivity.this, getString(R.string.loading));
+        super.onPreExecute();
+    }
+
+    @Override
+    protected String doInBackground(Void... voids) {
+        return JsonClass.getJson(LIKE_GET_SICKNESS);
+    }
+
+    @Override
+    protected void onPostExecute(String data) {
+
+        if (data != null) {
+
+            try {
+
+                JSONArray jsonArray = new JSONArray(data);
+                long res = 0;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String id = jsonObject.getString("id");
+                    String name = jsonObject.getString("name");
+                    String sharhebimari = jsonObject.getString("sharhebimari");
+                    String alayem = jsonObject.getString("alayem");
+
+                    Items items = new Items();
+                    items.id_Items = id;
+                    items.name_Items = name;
+                    items.sharhebimari_Items = sharhebimari;
+                    items.alyem_Items = alayem;
+                    res = dataBaseManager.insertSicknessData(items);
+                }
+                progressDialog.dismiss();
+                if (res == -1) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.seccessfully), Toast.LENGTH_SHORT).show();
+                    editor.putBoolean(FIRST_RUN, false).apply();
+                    first_run = false;
+                    tedad_sickness_database = dataBaseManager.count(DataBaseManager.TABLE_NAME_SICKNESS);
+                    hasNewData();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                progressDialog.dismiss();
+            }
+        } else {
+            Toast.makeText(MainActivity.this, getString(R.string.not_information), Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+        }
+        super.onPostExecute(data);
+       }
+   }
+//   The class related to getting the number of data from the server.
+    private class GetTedadServer extends AsyncTask<Void,Void,String> {
+
+        Context context;
+        public GetTedadServer(Context context) {
+            this.context = context;
+        }
+
         @Override
         protected void onPreExecute() {
-            showMessage(MainActivity.this,getString(R.string.loading));
             super.onPreExecute();
         }
 
         @Override
         protected String doInBackground(Void... voids) {
-            return JsonClass.getJson(LIKE_GET_SICKNESS);
+            return JsonClass.getJson(LIKE_GET_TEDAD);
         }
 
         @Override
         protected void onPostExecute(String data) {
 
-            if (data !=null){
+            if (data.isEmpty()){
 
                 try {
 
                     JSONArray jsonArray = new JSONArray(data);
                     long res = 0;
-                    for (int i=0; i<jsonArray.length();i++){
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String id = jsonObject.getString("id");
-                        String name = jsonObject.getString("name");
-                        String sharhebimari = jsonObject.getString("sharhebimari");
-                        String alayem = jsonObject.getString("alayem");
 
-                        Items items = new Items();
-                        items.id_Items = id;
-                        items.name_Items = name;
-                        items.sharhebimari_Items = sharhebimari;
-                        items.alyem_Items = alayem;
-                        res = dataBaseManager.insertSicknessData(items);
-                    }
-                    progressDialog.dismiss();
-                    if (res == -1){
-                        Toast.makeText(getApplicationContext(), getString(R.string.error), Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(getApplicationContext(),getString(R.string.seccessfully), Toast.LENGTH_SHORT).show();
-                        editor.putBoolean(FIRST_RUN,false).apply();
-                        first_run = false;
-                        tedad_sickness_database = dataBaseManager.count(DataBaseManager.TABLE_NAME_SICKNESS);hasNewData();
-                    }
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    String id = jsonObject.getString("id");
+                    tedad_drugs_server = Integer.parseInt(jsonObject.getString("drugs_tedad"));
+                    tedad_sickness_server = Integer.parseInt(jsonObject.getString("sickness_tedad"));
+                    tedad_honey_server = Integer.parseInt(jsonObject.getString("honey_tedad"));
+                    tedad_alayem_server = Integer.parseInt(jsonObject.getString("alayem_tedad"));
+                    tedad_avarez_server = Integer.parseInt(jsonObject.getString("avarez_tedad"));
+                    hasNewData();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    progressDialog.dismiss();
                 }
             }else {
                 Toast.makeText(MainActivity.this,getString(R.string.not_information), Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
             }
             super.onPostExecute(data);
         }
