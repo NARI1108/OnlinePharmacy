@@ -449,4 +449,38 @@ private class GetAvarezData extends AsyncTask<Void,Void,String> {
             super.onPostExecute(data);
         }
     }
+
+//  With this method, the number of information stored in the database is compared with the number of data on the server, and if the number of servers is more, the user is notified.
+    private void hasNewData() {
+        has_new_data_honey = tedad_honey_server - tedad_honey_database;
+        if(has_new_data_honey>0){
+            txt_honey_tedad.setText(String.valueOf(has_new_data_honey));
+            txt_honey_tedad.setVisibility(View.VISIBLE);
+        }else{
+            txt_honey_tedad.setVisibility(View.GONE);
+            has_new_data_alayem = tedad_alayem_server - tedad_alayem_database;}
+        if( has_new_data_alayem>0){
+           Toast.makeText(MainActivity.this,has_new_data_alayem + getString(R.string.new_sickneww),Toast.LENGTH_SHORT).show();
+        }
+        has_new_data_avarez =tedad_avarez_server - tedad_avarez_database;
+        if( has_new_data_avarez >0){
+            txt_avarez_tedad.setText(String.valueOf(has_new_data_avarez));
+            txt_avarez_tedad.setVisibility(View.VISIBLE);
+        }else{
+           txt_avarez_tedad.setVisibility(View.GONE);
+            has_new_data_drugs = tedad_drugs_server - tedad_drugs_database;
+        }
+        if( has_new_data_drugs>0){
+            txt_drugs_tedad.setText(String.valueOf( has_new_data_drugs));
+            txt_drugs_tedad.setVisibility(View.VISIBLE);
+        }else{
+            txt_drugs_tedad.setVisibility(View.GONE);
+            has_new_data_sickness = tedad_sickness_server - tedad_sickness_database;
+        }if( has_new_data_sickness>0){
+            txt_sickness_tedad.setText(String.valueOf( has_new_data_sickness));
+            txt_sickness_tedad.setVisibility(View.VISIBLE);
+        }else
+            txt_sickness_tedad.setVisibility(View.GONE);
+
+    }
 }
