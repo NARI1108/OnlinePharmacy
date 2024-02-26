@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -498,7 +499,7 @@ private class GetAvarezData extends AsyncTask<Void,Void,String> {
         switch (id) {
             case R.id.rlt_drugs:
                 intent = new Intent(MainActivity.this, FehrestActivity.class);
-                intent.putExtra("datatype",DRUGS);
+                intent.putExtra("datatype", DRUGS);
                 intent.putExtra("activity", "main");
 //                We bet that if there is a serious amount of data on the server, the update will be done first
                 if (has_new_data_drugs > 0) {
@@ -508,43 +509,54 @@ private class GetAvarezData extends AsyncTask<Void,Void,String> {
                 explosionField.explode(view);
                 break;
             case R.id.rlt_sickness:
-                intent = new Intent(MainActivity.this,FehrestActivity.class);
-                intent.putExtra("datatype",SICKNESS);
-                intent.putExtra("activity","main");
-                if(has_new_data_sickness>0){
-                    updateDialog(SICKNESS,has_new_data_sickness+getString(R.string.newsickness));
-                    return;}
+                intent = new Intent(MainActivity.this, FehrestActivity.class);
+                intent.putExtra("datatype", SICKNESS);
+                intent.putExtra("activity", "main");
+                if (has_new_data_sickness > 0) {
+                    updateDialog(SICKNESS, has_new_data_sickness + getString(R.string.newsickness));
+                    return;
+                }
                 explosionField.explode(view);
                 break;
             case R.id.rlt_honey:
-                intent = new Intent(MainActivity.this,FehrestActivity.class);
-                intent.putExtra("datatype",HONEY);
-                intent.putExtra("activity","main");
-                if(has_new_data_honey>0){
-                    updateDialog(HONEY,has_new_data_honey+getString(R.string.NewHoney));
-                    return;}
+                intent = new Intent(MainActivity.this, FehrestActivity.class);
+                intent.putExtra("datatype", HONEY);
+                intent.putExtra("activity", "main");
+                if (has_new_data_honey > 0) {
+                    updateDialog(HONEY, has_new_data_honey + getString(R.string.NewHoney));
+                    return;
+                }
                 explosionField.explode(view);
                 break;
             case R.id.rlt_avarez:
-                intent = new Intent(MainActivity.this,FehrestActivity.class);
-                intent.putExtra("datatype",AVAREZ);
-                intent.putExtra("activity","main");
-                if(has_new_data_avarez>0){
-                    updateDialog(AVAREZ,has_new_data_avarez+getString(R.string.newavarez));
-                    return;}
+                intent = new Intent(MainActivity.this, FehrestActivity.class);
+                intent.putExtra("datatype", AVAREZ);
+                intent.putExtra("activity", "main");
+                if (has_new_data_avarez > 0) {
+                    updateDialog(AVAREZ, has_new_data_avarez + getString(R.string.newavarez));
+                    return;
+                }
                 explosionField.explode(view);
                 break;
             case R.id.bmi:
                 explosionField.exlode(view);
-                intent = new Intent(MainActivity.this,Bmi_Activity.class);
+                intent = new Intent(MainActivity.this, Bmi_Activity.class);
                 break;
             case R.id.rlt_tashkhis:
                 explosionField.explode(view);
-                intent = new Intent(MainActivity.this,FehrestActivity.class);
-                intent.putExtra("datatype",TASHKHIS);
-                intent.putExtra("activity","main");
+                intent = new Intent(MainActivity.this, FehrestActivity.class);
+                intent.putExtra("datatype", TASHKHIS);
+                intent.putExtra("activity", "main");
                 break;
         }
-    }
+//        Create a 1 second delay to see the button explosion animation.
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(intent);
+                finish();
+            }
+        }, 1000);
 
+    }
 }
