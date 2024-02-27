@@ -588,5 +588,33 @@ private class GetAvarezData extends AsyncTask<Void,Void,String> {
         });
         hoshdar.create().show();
     }
+//    The method related to displaying the data update dialog.
+    public void updateDialog(int datatype,String peqam){
 
+        AlertDialog.Builder hoshdar = new AlertDialog.Builder(MainActivity.this);
+        hoshdar.setMessage(peqam);
+        hoshdar.setCancelable(false);
+        hoshdar.setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+               switch(datatype){
+                   case 1:new GetDrugsData().execute();
+                   break;
+                   case 2:new GetSicknessData().execute();
+                   break;
+                   case 3:new GetHoneyData(MainActivity.this).execute();
+                   break;
+                   case 4:new GetAvarezData().execute();
+                   break;
+               }
+            }
+        });
+        hoshdar.setNegativeButton(getString(R.string.opt_out), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        hoshdar.create().show();
+    }
 }
