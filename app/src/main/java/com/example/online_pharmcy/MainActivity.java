@@ -7,6 +7,7 @@ import androidx.core.view.GravityCompat;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
 import android.os.AsyncTask;
@@ -567,6 +568,25 @@ private class GetAvarezData extends AsyncTask<Void,Void,String> {
             drawer_layout.closeDrawer(GravityCompat.START);
         }else {exitDialog(getString(R.string.exit));}
         //super.onBackPressed();
+    }
+//    The method related to displaying the exit dialog.
+    public void exitDialog(String peqam){
+        AlertDialog.Builder hoshdar = new AlertDialog.Builder(MainActivity.this);
+        hoshdar.setMessage(peqam);
+        hoshdar.setCancelable(false);
+        hoshdar.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        hoshdar.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DialogInterface.cancel();
+            }
+        });
+        hoshdar.create().show();
     }
 
 }
