@@ -559,4 +559,14 @@ private class GetAvarezData extends AsyncTask<Void,Void,String> {
         }, 1000);
 
     }
+
+//    This method is used to respond to the back button press event on the device.
+    @Override
+    public void onBackPressed() {
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)){
+            drawer_layout.closeDrawer(GravityCompat.START);
+        }else {exitDialog(getString(R.string.exit));}
+        //super.onBackPressed();
+    }
+
 }
