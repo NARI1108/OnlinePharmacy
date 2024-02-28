@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="@string/favoite_item"
+        android:icon="@drawable/heart_icon"
+        android:id="@+id/favorite" />
+    <item
+        android:title="@string/setting_item"
+        android:icon="@drawable/settings"
+        android:id="@+id/settings" />
+    <item
+        android:title="@string/about_item"
+        android:icon="@drawable/information_outline"
+        android:id="@+id/About" />
+    <item
+        android:title="@string/resources_item"
+        android:icon="@drawable/source_merge"
+        android:id="@+id/resource" />
+    <item
+        android:title="@string/exit_item"
+        android:icon="@drawable/exit_to_app"
+        android:id="@+id/exit" />
+</menu>
