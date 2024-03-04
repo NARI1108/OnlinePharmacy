@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:focusedByDefault="true"
+    android:focusableInTouchMode="true">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/orange"
+        android:id="@+id/toolbar"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/favorite"
+            android:textColor="@color/white"
+            android:layout_marginEnd="8dp"
+            android:textSize="25sp"/>
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <LinearLayout
+        android:id="@+id/layout_fav"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="3">
+        <LinearLayout
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:weightSum="2"
+            android:paddingRight="12dp"
+            android:paddingLeft="12dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_drugs_fav"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/drugs_main"
+                android:onClick="onClick" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_margin="10dp"
+                android:id="@+id/btn_sickness_fav"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:background="@drawable/sickness_main"/>
+        </LinearLayout>
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingRight="12dp"
+            android:paddingLeft="12dp"
+            android:weightSum="2">
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_margin="10dp"
+                android:id="@+id/btn_honey_fav"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:background="@drawable/honey_main"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_margin="10dp"
+                android:id="@+id/btn_avarez_fav"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:background="@drawable/avarez"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
