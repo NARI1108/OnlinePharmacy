@@ -1,6 +1,8 @@
 package com.example.online_pharmcy;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,7 +22,7 @@ public class FehrestActivity extends AppCompatActivity {
     String activity;
     ArrayList<String> names_list;
     Adapter  adapter;
-
+    boolean  isSearching = false, foundSickness = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,7 @@ public class FehrestActivity extends AppCompatActivity {
         findViews();
         request_Catch();
         adapter();
+        setEdt_search();
     }
 //    this method is used to find and associate views in the application page.
     public void findViews(){
@@ -71,5 +74,25 @@ public class FehrestActivity extends AppCompatActivity {
         adapter = new Adapter(this,names_list);
         rcl_show.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         rcl_show.setAdapter(adapter);
+    }
+//    This method is used to set events related to text changes in a text field (EditText). This method adds information to the text field that defines a listener for field text changes.
+    private void setEdt_search(){
+        edt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                foundSickness=false;
+                searchName(editable.toString());
+                if (editable.toString().trim().length() == 0){
+                    isSearching=false;
+                }else {isSearching=true;}
+                if (dataType == MainActivity.TASHKHIS)txt_title.setVisibility(View.GONE);
+            }
+        });
     }
 }
