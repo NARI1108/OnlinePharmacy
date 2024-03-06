@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class FehrestActivity extends AppCompatActivity {
     int dataType;
     String activity;
     ArrayList<String> names_list;
+    Adapter  adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class FehrestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fehrest);
         findViews();
         request_Catch();
+        adapter();
     }
 //    this method is used to find and associate views in the application page.
     public void findViews(){
@@ -62,5 +65,11 @@ public class FehrestActivity extends AppCompatActivity {
             txt_title.setText(R.string.searchText_Tashkhis);
             rcl_show.setVisibility(View.GONE);
         }
+    }
+//    Setting the adapter and connecting it to the recycler view.
+    private void adapter(){
+        adapter = new Adapter(this,names_list);
+        rcl_show.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        rcl_show.setAdapter(adapter);
     }
 }
