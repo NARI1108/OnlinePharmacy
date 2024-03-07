@@ -179,5 +179,10 @@ public class FehrestActivity extends AppCompatActivity {
         }
         super.onResume();
     }
-
+//    This onBackPressed() method is used in an Activity and is called when the user presses the Back button on the device.
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(FehrestActivity.this, MainActivity.class));
+        finish();
+    }
 }
