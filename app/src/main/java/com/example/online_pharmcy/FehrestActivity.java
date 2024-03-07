@@ -185,4 +185,17 @@ public class FehrestActivity extends AppCompatActivity {
         startActivity(new Intent(FehrestActivity.this, MainActivity.class));
         finish();
     }
+//    Search method in recycler view.
+    private void searchName(String text){
+        search_list.clear();
+        for (String n : names_list) {
+            if (n.toLowerCase().trim().contains(text.toLowerCase().trim())){
+                search_list.add(n);
+            }
+        }
+        adapter = new Adapter(this,search_list);
+        rcl_show.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        rcl_show.setVisibility(View.VISIBLE);
+    }
 }
