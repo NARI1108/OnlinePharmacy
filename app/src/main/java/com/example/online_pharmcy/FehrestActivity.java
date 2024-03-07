@@ -148,4 +148,54 @@ public class FehrestActivity extends AppCompatActivity {
             }
         }));
     }
+//    This onResume() method is used in an Activity and is called when the desired activity returns to the foreground and comes to the front of the screen again.
+    @Override
+    protected void onResume() {
+//      We made a condition that if it was in the mode of displaying the interested ones, the list will be created every time you come to the activity, so that the items that are removed from the list will not be displayed.
+        if (activity.equals("fav")) {
+            if (dataType == MainActivity.DRUGS) {
+
+                names_list = dataBaseManager.showFavorite(DataBaseManager.TABLE_NAME_DURGS);
+                txt_title.setVisibility(View.VISIBLE);
+                txt_title.setText(R.string.searchText_drugs);
+
+            } else if (dataType == MainActivity.SICKNESS) {
+
+                names_list = dataBaseManager.showFavorite(DataBaseManager.TABLE_NAME_SICKNESS);
+                txt_title.setVisibility(View.VISIBLE);
+                txt_title.setText(R.string.searchText_Sickness);
+
+            } else if (dataType == MainActivity.HONEY) {
+
+                names_list = dataBaseManager.showFavorite(DataBaseManager.TABLE_NAME_HONEY);
+
+            } else if (dataType == MainActivity.AVAREZ) {
+
+                names_list = dataBaseManager.showFavorite(DataBaseManager.TABLE_NAME_AVAREZ);
+            }
+            adapter = new Adapter(this, names_list);
+            rcl_show.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+            rcl_show.setAdapter(adapter);
+        }
+        super.onResume();
+    }
+//    This onBackPressed() method is used in an Activity and is called when the user presses the Back button on the device.
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(FehrestActivity.this, MainActivity.class));
+        finish();
+    }
+//    Search method in recycler view.
+    private void searchName(String text){
+        search_list.clear();
+        for (String n : names_list) {
+            if (n.toLowerCase().trim().contains(text.toLowerCase().trim())){
+                search_list.add(n);
+            }
+        }
+        adapter = new Adapter(this,search_list);
+        rcl_show.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        rcl_show.setVisibility(View.VISIBLE);
+    }
 }
