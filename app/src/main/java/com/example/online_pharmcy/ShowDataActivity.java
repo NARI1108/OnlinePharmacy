@@ -1,7 +1,9 @@
 package com.example.online_pharmcy;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ public class ShowDataActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_data);
         findViews();
+        restoreSetting();
     }
 //    this method is used to find and associate views in the application page.
     private void findViews(){
@@ -41,5 +44,32 @@ public class ShowDataActivity extends BaseActivity {
         layout2 =  findViewById(R.id.layout2);
         layout3 =  findViewById(R.id.layout3);
         layout4 =  findViewById(R.id.layout4);
+    }
+//    This method is used to restore and reset the page.
+    private void restoreSetting(){
+        Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/"+font+".ttf");
+        txt_Name.setTypeface(typeface);
+        txt_GroheDaro.setTypeface(typeface);
+        txt_MoredeMasraf.setTypeface(typeface);
+        txt_Mizanemasraf.setTypeface(typeface);
+        txt_tozihat.setTypeface(typeface);
+        gorohedaro.setTypeface(typeface);
+        MoredeMasraf.setTypeface(typeface);
+        Mizanemasraf.setTypeface(typeface);
+        tozihat.setTypeface(typeface);
+
+        txt_GroheDaro.setTextSize(font_size);
+        txt_MoredeMasraf.setTextSize(font_size);
+        txt_Mizanemasraf.setTextSize(font_size);
+        txt_tozihat.setTextSize(font_size);
+
+
+        txt_GroheDaro.setLineSpacing(line_spacing,1.0f);
+        txt_MoredeMasraf.setLineSpacing(line_spacing,1.0f);
+        txt_Mizanemasraf.setLineSpacing(line_spacing,1.0f);
+        txt_tozihat.setLineSpacing(line_spacing,1.0f);
+//      Keeping the screen on
+//      if isScreenOn is set to true, the FLAG_KEEP_SCREEN_ON flag will be added to the current window to keep the screen on (without auto-shutdown).
+        if(isScreenOn){getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);}
     }
 }
