@@ -28,6 +28,7 @@ public class ShowDataActivity extends BaseActivity {
         setContentView(R.layout.activity_show_data);
         findViews();
         restoreSetting();
+        elements();
     }
 //    this method is used to find and associate views in the application page.
     private void findViews(){
@@ -120,5 +121,70 @@ public class ShowDataActivity extends BaseActivity {
                startActivity(intent_sms);
                break;
        }
+    }
+    private void elements(){
+
+        if (dataType== MainActivity.DRUGS){
+            table_name = DataBaseManager.TABLE_NAME_DURGS;
+            items = dataBaseManager.showDrugs(name);
+            txt_Name.setText(name);
+            txt_GroheDaro.setText(items.gorohedaro_Items);
+            txt_MoredeMasraf.setText(items.moredemasraf_Items);
+            txt_Mizanemasraf.setText(items.mizaneMasraf_Items);
+            txt_tozihat.setText(items.tozihat_Items);
+            text_share = name + "\n" + items.gorohedaro_Items + "\n" + items.moredemasraf_Items + "\n" + items.mizaneMasraf_Items + "\n" + items.tozihat_Items;
+
+        }else if (dataType== MainActivity.SICKNESS || dataType== MainActivity.TASHKHIS){
+            table_name = DataBaseManager.TABLE_NAME_SICKNESS;
+            items = dataBaseManager.showSickness(name);
+            txt_Name.setText(name);
+            gorohedaro.setText(R.string.description_of_the_disease);
+            txt_GroheDaro.setText(items.sharhebimari_Items);
+            MoredeMasraf.setText(R.string.symptoms);
+            txt_MoredeMasraf.setText(items.alyem_Items);
+            txt_Mizanemasraf.setVisibility(View.GONE);
+            txt_tozihat.setVisibility(View.GONE);
+            layout3.setVisibility(View.GONE);
+            layout4.setVisibility(View.GONE);
+            Mizanemasraf.setVisibility(View.GONE);
+            tozihat.setVisibility(View.GONE);
+            text_share = name + "\n" + items.sharhebimari_Items + "\n" + items.alyem_Items;
+
+        }else if (dataType== MainActivity.HONEY){
+            table_name = DataBaseManager.TABLE_NAME_HONEY;
+            items = dataBaseManager.showHoney(name);
+            txt_Name.setText(name);
+            txt_GroheDaro.setText(items.khavaseAsal_Items);
+            txt_MoredeMasraf.setVisibility(View.GONE);
+            txt_Mizanemasraf.setVisibility(View.GONE);
+            txt_tozihat.setVisibility(View.GONE);
+            layout1.setVisibility(View.GONE);
+            layout2.setVisibility(View.GONE);
+            layout3.setVisibility(View.GONE);
+            layout4.setVisibility(View.GONE);
+            gorohedaro.setVisibility(View.GONE);
+            MoredeMasraf.setVisibility(View.GONE);
+            Mizanemasraf.setVisibility(View.GONE);
+            tozihat.setVisibility(View.GONE);
+            text_share = name + "\n" + items.khavaseAsal_Items;
+
+        }else if (dataType== MainActivity.AVAREZ){
+            table_name = DataBaseManager.TABLE_NAME_AVAREZ;
+            items = dataBaseManager.showAvarez(name);
+            txt_Name.setText(name);
+            txt_GroheDaro.setText(items.text_Items);
+            txt_MoredeMasraf.setVisibility(View.GONE);
+            txt_Mizanemasraf.setVisibility(View.GONE);
+            txt_tozihat.setVisibility(View.GONE);
+            layout1.setVisibility(View.GONE);
+            layout2.setVisibility(View.GONE);
+            layout3.setVisibility(View.GONE);
+            layout4.setVisibility(View.GONE);
+            gorohedaro.setVisibility(View.GONE);
+            MoredeMasraf.setVisibility(View.GONE);
+            Mizanemasraf.setVisibility(View.GONE);
+            tozihat.setVisibility(View.GONE);
+            text_share = name + "\n" + items.text_Items;
+        }
     }
 }
