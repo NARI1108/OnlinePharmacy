@@ -1,12 +1,17 @@
 package com.example.online_pharmcy;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ShowDataActivity extends BaseActivity {
     TextView txt_Name, txt_GroheDaro, txt_MoredeMasraf, txt_Mizanemasraf, txt_tozihat,gorohedaro,MoredeMasraf, Mizanemasraf, tozihat;
@@ -71,5 +76,49 @@ public class ShowDataActivity extends BaseActivity {
 //      Keeping the screen on
 //      if isScreenOn is set to true, the FLAG_KEEP_SCREEN_ON flag will be added to the current window to keep the screen on (without auto-shutdown).
         if(isScreenOn){getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);}
+    }
+    public void btnsClick(View view){
+       int id = view.getId();
+       switch(id){
+//           In general, this is the part of the code that, by clicking on an ImageView, places the desired text in the clipboard of the Android application and displays a small message to the user.
+           case R.id.img_copy:
+//               Add the desired text to the clipboard.
+               ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+               clipboardManager.setPrimaryClip(ClipData.newPlainText("Text",text_share));
+               Toast.makeText(this, R.string.adding_cilpboard,Toast.LENGTH_SHORT).show();
+               break;
+//           In general, this is a piece of code that, by clicking on an ImageView, changes the item's interest status (add or remove from the interest list) and displays a small message to the user.
+           case R.id.img_fav:
+               int fav;
+               if(isFavorite == 0){
+                   Toast.makeText(this,"به لیست علاقمندی ها اضافه شد",Toast.LENGTH_SHORT).show();
+                   imgFav.setImageResource(R.drawable.heart_icon);
+                   fav = 1;
+                   isFavorite = 1;
+               }else{
+                   Toast.makeText(this,"از لیست علاقمندی ها حذف شد",Toast.LENGTH_SHORT).show();
+                   fav = 0;
+                   isFavorite = 0;
+                   imgFav.setImageResource(R.drawable.heart_outline);
+               }
+               dataBaseManager.updateFavorite(id,fav,table_name);
+               break;
+//           In general, this is the part of the code that, by clicking on an ImageView, shares the desired text using other programs and displays a list of programs that can send the text to the user.
+           case R.id.img_share:
+//               Tap the desired text with all apps that have the ability to send text.
+               Intent intent_share = new Intent(Intent.ACTION_SEND);
+               intent_share.putExtra(Intent.EXTRA_TEXT,text_share);
+               intent_share.setType("text/plain");
+               startActivity(intent_share);
+               break;
+//          In general, this is the part of the code that, by clicking on an ImageView, sends the desired text using the SMS programs available on the device and displays a list of SMS programs to the user.
+           case R.id.img_sms:
+//               The method of sending a text via SMS.
+               Intent intent_sms = new Intent(Intent.ACTION_VIEW);
+               intent_sms.putExtra("sms_body",text_share);
+               intent_sms.setData(Uri.parse("sms:"));
+               startActivity(intent_sms);
+               break;
+       }
     }
 }
