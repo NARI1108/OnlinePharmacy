@@ -44,6 +44,8 @@ public class ShowDataActivity extends BaseActivity {
         }else{
             imgFav.setImageResource(R.drawable.heart_icon);
         }
+//        Seekbar resizing event.
+        seekBar();
     }
 //    this method is used to find and associate views in the application page.
     private void findViews(){
@@ -201,5 +203,21 @@ public class ShowDataActivity extends BaseActivity {
             tozihat.setVisibility(View.GONE);
             text_share = name + "\n" + items.text_Items;
         }
+    }
+//    To adjust the font size of different texts on the screen.
+    public void seekBar(){
+      seek_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+          @Override
+          public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+              txt_GroheDaro.setTextSize(progress);
+              txt_Mizanemasraf.setTextSize(progress);
+              txt_MoredeMasraf.setTextSize(progress);
+              txt_tozihat.setTextSize(progress);
+          }
+          @Override
+          public void onStartTrackingTouch(SeekBar seekBar) {}
+          @Override
+          public void onStopTrackingTouch(SeekBar seekBar) {}
+      });
     }
 }
