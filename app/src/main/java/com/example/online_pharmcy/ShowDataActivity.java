@@ -27,8 +27,23 @@ public class ShowDataActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_data);
         findViews();
+//      Get saved settings.
+        getSharedpref();
+//      Reset saved settings.
         restoreSetting();
+        dataType = getIntent().getIntExtra("datatype",0);
+        name = getIntent().getStringExtra("name");
+        dataBaseManager = new DataBaseManager(this);
+        items = new Items();
         elements();
+//        We made a bet that if the displayed item was among your interests, show your heart full, otherwise show your heart empty.
+        isFavorite = items.favorite;
+        id = Integer.parseInt(items.id_Items);
+        if(isFavorite == 0){
+            imgFav.setImageResource(R.drawable.heart_outline);
+        }else{
+            imgFav.setImageResource(R.drawable.heart_icon);
+        }
     }
 //    this method is used to find and associate views in the application page.
     private void findViews(){
