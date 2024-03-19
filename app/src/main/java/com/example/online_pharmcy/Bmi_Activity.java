@@ -87,19 +87,19 @@ public class Bmi_Activity extends AppCompatActivity {
 
         } else if (natije < 30 && natije >= 25) {
 
-            txtResult.setText(name + getString(R.string.about) + vazneMonaseb + getString(R.string.ExteraFit_kg));
+            txtResult.setText(name + getString(R.string.about) + vazneMonaseb + getString(R.string.ExtraFit_kg));
 
         } else if (natije < 35 && natije >= 30) {
 
-            txtResult.setText(name + getString(R.string.Type1fit) + vazneMonaseb + getString(R.string.ExteraFit_kg));
+            txtResult.setText(name + getString(R.string.Type1fit) + vazneMonaseb + getString(R.string.ExtraFit_kg));
 
         } else if (natije < 40 && natije >= 35) {
 
-            txtResult.setText(name + getString(R.string.Type2fit) + vazneMonaseb + getString(R.string.ExteraFit_kg));
+            txtResult.setText(name + getString(R.string.Type2fit) + vazneMonaseb + getString(R.string.ExtraFit_kg));
 
         } else if (natije > 40) {
 
-            txtResult.setText(name + getString(R.string.Type3fit) + vazneMonaseb + getString(R.string.ExteraFit_kg));
+            txtResult.setText(name + getString(R.string.Type3fit) + vazneMonaseb + getString(R.string.ExtraFit_kg));
         }
     }
 //  This method is so that when the user presses the back button, the app goes to the main activity.
